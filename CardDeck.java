@@ -39,4 +39,26 @@ public class CardDeck {
         }
         return String.valueOf(number);
     }
+
+    public Card draw(){
+        Card selectedCard = getRandomCard();
+        cards.remove(selectedCard);
+        return selectedCard; 
+    }
+    private Card getRandomCard(){
+        int size = cards.size;
+        int select = (int)(Math.random()*size);
+        return cards.get(select);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Card card : cards){
+            sb.append(card.toString());
+            sb.append("\n");
+        }
+        return toString();
+    }
 }
