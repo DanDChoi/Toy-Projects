@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Dealer implements Player {
     private List<Card> cards;
+    private boolean turn;
 
     private static final int CAN_RECEIVE_POINT = 16;
 
@@ -45,5 +46,20 @@ public class Dealer implements Player {
     @Override
     public List<Card> openCards(){
         return this.cards;
+    }
+
+    @Override
+    public void turnOff(){
+        this.setTurn(false);
+    }
+
+    @Override
+    public void turnOn(){
+        this.setTurn(true);
+    }
+
+    @Override
+    public boolean setTurn(boolean turn){
+        this.turn = turn;
     }
 }

@@ -3,6 +3,7 @@ import java.util.LinkedList;
 
 public class Gamer implements Player{
     private List<Card> cards;
+    private boolean turn;
 
     public Gamer(){
         cards = new LinkedList<>();
@@ -31,4 +32,22 @@ public class Gamer implements Player{
         System.out.println(sb.toString());
     }
 
+    @Override
+    public void turnOff(){
+        this.setTurn(false);
+    }
+    
+    @Override
+    public void turnOn(){
+        this.setTurn(true);
+    }
+
+    @Override
+    public boolean isTurn(){
+        return this.turn;
+    }
+
+    private void setTurn(boolean turn){
+        this.turn = turn;
+    }
 }
