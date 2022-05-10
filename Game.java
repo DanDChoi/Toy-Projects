@@ -10,7 +10,7 @@ public class Game {
         Rule rule = new Rule();
         CardDeck cardDeck = new CardDeck();
 
-        List<Player> players = Arrays.asList(new Gamer(), new Dealer());
+        List<Player> players = Arrays.asList(new Gamer("사용자1"), new Dealer());
         List<Player> initAfterPlayers = initPhase(cardDeck, players);
         List<Player> playingAfterPlayers = playingPhase(sc, cardDeck, initAfterPlayers);
 
@@ -32,6 +32,8 @@ public class Game {
 
     private List<Player> receiveCardAllPlayers(Scanner sc, CardDeck cardDeck, List<Player> players){
         for(Player player : players){
+            System.out.println(player.getName() + "님 차례입니다.");
+
             if(isReceiveCard(sc)){
                 Card card = cardDeck.draw();
                 player.receiveCard(card);
