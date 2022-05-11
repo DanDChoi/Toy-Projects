@@ -4,7 +4,7 @@ public class Rule {
     public int getScore(List<Card> cards){
         return 0;
     }
-    public void getWinner(List<Player> players){
+    public Player getWinner(List<Player> players){
         Player highestPlayer = null;
         int highestPoint = 0;
 

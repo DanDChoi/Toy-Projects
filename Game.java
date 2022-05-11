@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game {
+    private static final int INIT_RECEIVE_CARD_COUNT = 2;
+    private static final String STOP_RECEIVE_CARD = "0";
 
     public void play(){
         System.out.println("=====black jack======");
@@ -58,8 +60,7 @@ public class Game {
         System.out.println("카드를 뽑으시겠습니까? 종료를 원하시면 0을 입력하세요");
         return !STOP_RECEIVE_CARD.equals(sc.nextLine());
     }
-
-    private static final int INIT_RECEIVE_CARD_COUNT = 2;
+    
     private List<Player> initPhase(CardDeck cardDeck, List<Player> players){
         System.out.println("처음 2장의 카드를 각자 뽑겠습니다");
         for(int i=0; i<INIT_RECEIVE_CARD_COUNT; i++){

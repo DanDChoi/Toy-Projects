@@ -39,7 +39,7 @@ public class Dealer implements Player {
 
         for(Card card : cards){
             sb.append(card.toString());
-            sb.append("/n");            
+            sb.append("\n");            
         }
         System.out.println(sb.toString());
     }
@@ -60,7 +60,11 @@ public class Dealer implements Player {
     }
 
     @Override
-    public boolean setTurn(boolean turn){
+    public boolean isTurn(){
+        return this.turn;
+    }
+
+    public void setTurn(boolean turn){
         this.turn = turn;
     }
 
