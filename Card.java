@@ -1,9 +1,9 @@
 public class Card {
-    private String pattern;
+    private Pattern pattern;
     private String denomination;
     private int point;
 
-    public Card(String pattern, int index){
+    public Card(Pattern pattern, int index){
         this.pattern = pattern;
         this.denomination = this.numberToDenomination(index);
         this.point = this.numberToPoint(index);
@@ -28,10 +28,10 @@ public class Card {
         return number;
     }
 
-    public String getPattern(){
+    public Pattern getPattern(){
         return pattern;
     }
-    public void setPattern(String pattern){
+    public void setPattern(Pattern pattern){
         this.pattern = pattern;
     }
     public String getDenomination(){
@@ -47,9 +47,23 @@ public class Card {
     public void setPoint(int point){
         this.point = point;
     }
-    
+
     @Override
     public String toString(){
         return "Card{" + "pattern='" + pattern + ", demnomination='" + denomination +"'}";
+    }
+
+    public enum Pattern{
+        SPADE("spade"),
+        HEART("heart"),
+        DIAMOND("diamond"),
+        CLUB("club");
+
+        private String value;
+
+        Pattern() {}
+        Pattern(String value){
+            this.value = value;
+        }
     }
 }
