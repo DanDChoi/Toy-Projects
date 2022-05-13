@@ -1,31 +1,38 @@
 public class Card {
     private Pattern pattern;
-    private String denomination;
-    private int point;
+    private Denomination denomination;
 
-    public Card(Pattern pattern, int index){
+    public Card(Pattern pattern, Denomination denomination){
         this.pattern = pattern;
-        this.denomination = this.numberToDenomination(index);
-        this.point = this.numberToPoint(index);
-    }
-    private String numberToDenomination(int number){
-        if(number == 1){
-            return "A";
-        }else if(number == 11){
-            return "J";
-        }else if(number == 12){
-            return "Q";
-        }else if(number == 13){
-            return "K";
-        }
-        return String.valueOf(number);
+        this.denomination = denomination;
     }
 
-    private int numberToPoint(int number){
-        if(number >= 11){
-            return 10;
+    public enum Denomination{
+        ACE("A", 1),
+        TWO("2", 2),
+        THREE("3", 3),
+        FOUR("4", 4),
+        FIVE("5", 5),
+        SIX("6", 6),
+        SEVEN("7", 7),
+        EIGHT("8", 8),
+        NINE("9", 9),
+        TEN("10", 10),
+        JACK("J", 11),
+        QUEEN("Q", 12),
+        KING("K", 13);
+
+        private String mark;
+        private int point;
+
+        Denomination(){}
+        Denomination(String mark, int point){
+            this.mark = mark;
+            this.point = point;
         }
-        return number;
+        public int getPoint(){
+            return this.point;
+        }    
     }
 
     public Pattern getPattern(){
@@ -34,19 +41,13 @@ public class Card {
     public void setPattern(Pattern pattern){
         this.pattern = pattern;
     }
-    public String getDenomination(){
+    public Denomination getDenomination(){
         return denomination;
     }
-    public void setDenomination(String denomination){
+    public void setDenomination(Denomination denomination){
         this.denomination = denomination;
     }
 
-    public int getPoint(){
-        return point;
-    }
-    public void setPoint(int point){
-        this.point = point;
-    }
 
     @Override
     public String toString(){
