@@ -17,7 +17,7 @@ public class CardDeck {
     private List<Card> generateCards(){
         List<Card> cards = new LinkedList<>();
 
-        for(String pattern : PATTERNS){
+        for(Card.Pattern pattern : Card.Pattern.values()){
             for(int i=1; i<=CARD_COUNT; i++){
                 Card card = new Card(pattern, i);
                 cards.add(card);
