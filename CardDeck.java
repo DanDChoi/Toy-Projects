@@ -1,40 +1,34 @@
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Stack;
 
 public class CardDeck {
-    private List<Card> cards;
+    private Stack<Card> cards;
     private static final String[] PATTERNS = {"spade", "heart", "diamond", "club"};
     private static final int CARD_COUNT = 13;
 
-    public Card getCard(){
-        return null;
+    public Stack<Card> getCards(){
+        return cards;
     }
 
     public CardDeck() {
         cards = this.generateCards();
+        Collections.shuffle(this.cards); 
 
     }
-    private List<Card> generateCards(){
-        List<Card> cards = new LinkedList<>();
+    private Stack<Card> generateCards(){
+        Stack<Card> cards = new Stack<>();
 
         for(Card.Pattern pattern : Card.Pattern.values()){
             for(Card.Denomination denomination : Card.Denomination.values()){
                 Card card = new Card(pattern, denomination);
-                cards.add(card);
+                cards.push(card);
             }
         }
         return cards;
     }
 
     public Card draw(){
-        Card selectedCard = getRandomCard();
-        cards.remove(selectedCard);
-        return selectedCard; 
-    }
-    private Card getRandomCard(){
-        int size = cards.size();
-        int select = (int)(Math.random()*size);
-        return cards.get(select);
+        return this.cards.pop();
     }
 
     @Override
