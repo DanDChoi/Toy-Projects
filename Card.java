@@ -30,6 +30,7 @@ public class Card {
             this.mark = mark;
             this.point = point;
         }
+        
         public int getPoint(){
             return this.point;
         }    
