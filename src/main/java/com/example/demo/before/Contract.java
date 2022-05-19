@@ -15,13 +15,13 @@ public class Contract {
     private String company;
 
     @Column(nullable = false)
-    private double commission;
+    private double commission; //수수료
 
     @Column(nullable = false)
-    private String commissionType;
+    private String commissionType; //수수료 타입 (ex: 퍼센테이지, 금액)
 
     @Column(nullable = false)
-    private String commissionCutting;
+    private String commissionCutting; //수수료 절삭 (ex: 반올림, 올림, 버림)
 
     public Contract() {}
 
