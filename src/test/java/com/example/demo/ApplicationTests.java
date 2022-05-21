@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.before.Commission;
 import com.example.demo.before.Contract;
 import com.example.demo.before.ContractRepository;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,8 @@ class ApplicationTests {
 		Contract contract = new Contract(
 				"무한상사",
 				1.0,
-				"percent",
-				"round"
+				Commission.TYPE_PERCENT,
+				Commission.CUTTING_ROUND
 		);
 		repository.save(contract);
 		Contract saved = repository.findAll().get(0);
