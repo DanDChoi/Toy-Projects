@@ -1,7 +1,5 @@
 package com.example.demo.after;
 
-import com.example.demo.before.Commission;
-
 import javax.persistence.*;
 
 @Entity
