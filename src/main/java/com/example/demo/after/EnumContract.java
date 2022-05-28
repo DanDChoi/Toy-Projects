@@ -23,8 +23,8 @@ public class EnumContract {
     private CommissionCutting commissionCutting; //수수료 절삭 (ex: 반올림, 올림, 버림)
 
     public enum CommissionType implements EnumModel{
-        PERCENT("percent"),
-        MONEY("money");
+        PERCENT("퍼센트"),
+        MONEY("금액");
 
         private String value;
 
@@ -43,9 +43,9 @@ public class EnumContract {
     }
 
     public enum CommissionCutting implements EnumModel{
-        ROUND("round"),
-        CEIL("ceil"),
-        FLOOR("floor");
+        ROUND("반올림"),
+        CEIL("올림"),
+        FLOOR("버림");
 
         private String value;
 
