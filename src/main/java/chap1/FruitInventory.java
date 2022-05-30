@@ -28,4 +28,15 @@ public class FruitInventory {
         }
         return result;
     }
+    //"특정 무게 상관없이 빨간사과를 찾고싶다" || "특정 색깔 상관없이 150g 이상인 사과를 찾고싶다" 라면?
+    public static List<Apple> filterApples(List<Apple> inventory, String color, int weight, boolean useColor){
+        List<Apple> result = new ArrayList<>();
+        for(Apple apple : inventory){
+            if((useColor && apple.getColor().equals(color)) //이게 정말 좋은 코드일까? 요구사항에 따라 유연하게 대처 가능? 더 많은 조건이 추가되면?
+                || (!useColor && apple.getWeight() > weight)){
+                result.add(apple);
+            }
+        }
+        return result;
+    }
 }
