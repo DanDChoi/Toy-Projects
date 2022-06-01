@@ -1,5 +1,8 @@
 package chap1;
 
+import chap1.java7.ApplePredicate;
+import chap1.java8.AppleOnePredicate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,4 +42,17 @@ public class FruitInventory {
         }
         return result;
     }
+
+    //파라미터에 Stirng color, int weight 대신 ApplePredicate 메소드를 넘겨주면 유연하게 대처 가능
+    public static List<Apple> filterApples(List<Apple> inventory, ApplePredicate predicate, Apple compare){
+        List<Apple> result = new ArrayList<>();
+
+        for (Apple apple : inventory) {
+            if (predicate.test(apple, compare)) {
+                result.add(apple);
+            }
+        }
+        return result;
+    }
+
 }
