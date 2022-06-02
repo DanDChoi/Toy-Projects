@@ -55,4 +55,16 @@ public class FruitInventory {
         return result;
     }
 
+    //Java8에서
+    public static List<Apple> filterApples(List<Apple> inventory, AppleOnePredicate predicate){
+        List<Apple> result = new ArrayList<>();
+
+        for (Apple apple : inventory) {
+            if (predicate.test(apple)) {
+                result.add(apple);
+            }
+        }
+        return result;
+    }
+
 }
