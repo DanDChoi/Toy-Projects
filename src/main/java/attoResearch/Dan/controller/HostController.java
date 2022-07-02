@@ -99,14 +99,14 @@ public class HostController {
         return "redirect:/";
     }
 
-    @GetMapping("update")
+    @DeleteMapping("update")
     public ModelAndView update(int hnum){
         Host host = hostService.host_info(hnum);
         ModelAndView mv = new ModelAndView("hosts/update", "host", host);
         return mv;
     }
 
-    @PostMapping("update")
+    @PatchMapping("update")
     public String update(Host host){
         String domain = host.getDomain();
         try{
