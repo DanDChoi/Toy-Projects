@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <title>Atto Host List</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>호스트이름</th>
+        <th>주소(도메인)</th>
+        <th>IP</th>
+        <th>상태</th>
+        <th>최근등록(수정)일</th>
+        <th>마지막 alive체크 시간</th>
+        <th>관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><span th:text="${host.hnum}"></span></td>
+        <td><span th:text="${host.name}"></span></td>
+        <td><span th:text="${host.domain}"></span></td>
+        <td><span th:text="${host.ip}"></span></td>
+        <td><span th:if="${status.equals('alive')}"> <p style="color: green">●</p></span>
+            <span th:if="${status.equals('dead')}"><p style="color: red">●</p></span></td>
+        <td><span th:text="${host.date}"></span></td>
+        <td><span th:text="${aliveTime}"></span></td>
+        <td>
+            <a th:href="@{update(hnum=${host.hnum})}">수정</a>/
+            <a th:href="@{delete(hnum=${host.hnum})}">삭제</a></td>
+    </tr>
+    </tbody>
+</table>
+<div style="text-align: center">
+    <button onclick="location.href='/'">목록</button>
+</div>
+</body>
+</html>
