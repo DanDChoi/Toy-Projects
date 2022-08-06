@@ -10,8 +10,6 @@ public class Extension {
     private Long id;
     private String name;
 
-    private List<String> fixedExtensions;
-
     public Extension() {
     }
     public Extension(Long id, String name) {

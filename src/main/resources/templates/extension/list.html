@@ -8,16 +8,6 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <title>Flow by Daehyun</title>
 
-    <script type="text/javascript">
-        function checking(checked){
-            var result = document.getElementById("checkResult");
-            var name =
-            if(checked.checked == true){
-                location.href= ""
-            }
-        }
-    </script>
-
 </head>
 <body>
 <div class="container mt-3" style="width: 50%">
@@ -34,10 +24,9 @@
             <div><h5 style="margin-right: 10px">고정 확장자</h5></div>
             <div class="form-check" th:each="fixedExtension : ${fixedExtensions}">
                         <input type="checkbox" class="form-check-input"
-                               th:field="${fixedExtensions}" th:value="${fixedExtension}" th:onchange="'location.href = \'' + @{/fileExtension/post/{name}(name=${fixedExtension})} + '\''">
-                        <label th:text="${fixedExtension}" class="form-check-label" style="margin-right: 10px;">고정확장자</label>
-<!--                        th:for="${#ids.prev('fixedExtension')}"-->
-                    <input type="hidden" name="checkResult" id="checkResult">
+                               th:value="${fixedExtension.key}" th:checked="${fixedExtension.value eq true}"
+                               th:onchange="'location.href = \'' + @{/fileExtension/fixed/{name}(name=${fixedExtension.key})} + '\''">
+                        <label th:text="${fixedExtension.key}" class="form-check-label" style="margin-right: 10px;">고정확장자</label>
             </div>
         </div>
 <!-- 고정 확장자 체크박스 끝 -->
