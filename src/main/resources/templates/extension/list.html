@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript"
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <title>Flow by Daehyun</title>
 
 </head>
@@ -15,21 +13,24 @@
         <h2>파일 확장자 차단</h2>
     </div>
 
-    <form action="list.html" th:action th:object="${extensions}" method="post">
+    <form action="list.html" name="extension" th:action th:object="${extensions}" method="post">
 
     <hr class="my-4">
     <div>
 <!-- 고정 확장자 체크박스 -->
         <div class="mb-3 align-content-center" style="display: flex">
             <div><h5 style="margin-right: 10px">고정 확장자</h5></div>
+
             <div class="form-check" th:each="fixedExtension : ${fixedExtensions}">
-                        <input type="checkbox" class="form-check-input"
+                        <input type="checkbox" class="form-check-input" name="checkbox"
                                th:value="${fixedExtension.key}" th:checked="${fixedExtension.value eq true}"
-                               th:onchange="'location.href = \'' + @{/fileExtension/fixed/{name}(name=${fixedExtension.key})} + '\''">
-                        <label th:text="${fixedExtension.key}" class="form-check-label" style="margin-right: 10px;">고정확장자</label>
+                th:onchange="'location.href = \'' + @{/fileExtension/fixed/{name}(name=${fixedExtension.key})} + '\''">
+                <label th:text="${fixedExtension.key}" class="form-check-label" style="margin-right: 10px;">고정확장자</label>
             </div>
+
         </div>
 <!-- 고정 확장자 체크박스 끝 -->
+
 <!-- 커스텀 확장자 입력창 -->
         <div class="mb-3 align-content-center" style="display: flex">
             <div style="margin-right: 15px">
@@ -43,6 +44,7 @@
         <div class="field-error" th:if="${errors?.containsKey('name')}" th:text="${errors['name']}" style="color: red">에러 </div>
         <hr class="my-4">
 <!-- 커스텀 확장자 입력창 끝 -->
+
 <!-- 차단된 확장자 리스트 -->
         <div >
             <label th:each="extension : ${extensions}">
@@ -58,6 +60,7 @@
     </div>
     <hr class="my-4">
 <!-- 차단된 확장자 리스트 끝 -->
+
 <!-- 업로드 테스트 버튼 -->
     <div class="row">
         <div class="col text-center">
@@ -67,6 +70,7 @@
         </div>
     </div>
 <!-- 업로드 테스트 버튼 끝 -->
+
     </form>
 </div> <!-- /container -->
 

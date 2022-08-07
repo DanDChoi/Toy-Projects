@@ -18,4 +18,5 @@ public class TestDataInit {
         extensionRepository.save(new Extension(1L, "txt"));
         extensionRepository.save(new Extension(2L, "zip"));
     }
+
 }

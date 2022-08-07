@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -20,81 +23,85 @@ public class ExtensionController {
 
     private final ExtensionRepository extensionRepository;
 
-
-    @ModelAttribute("fixedExtensions")
-    public Map<String, Boolean> fixedExtensions(){
-        Map<String, Boolean> fixedExtensions = new LinkedHashMap<>();
-        fixedExtensions.put("bat", false);
-        fixedExtensions.put("cmd", false);
-        fixedExtensions.put("com", false);
-        fixedExtensions.put("cpl", false);
-        fixedExtensions.put("exe", false);
-        fixedExtensions.put("scr", false);
-        fixedExtensions.put("js", false);
-        return fixedExtensions;
-    }
-
+    String[] fixEx = {"bat", "cmd", "com", "cpl", "exe", "scr", "js"};
+    List<String> fixRepo = new ArrayList<>();
+    Map<String, Boolean> fixedExtensions = new LinkedHashMap<>();
     @GetMapping
-//            (value = {"/", "/{name}&{result}")
-    public String extension(Model model, String name, boolean result) {
+    public String extension(Model model, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
         List<Extension> extensions = extensionRepository.findAll();
+        if(cookies == null){
+            for(int i=0; i<fixEx.length; i++){
+                fixedExtensions.put(fixEx[i], false);
+            }
+        }else{
+            for(int i=0; i<fixEx.length; i++){
+                fixedExtensions.put(fixEx[i], false);
+            }
+            for(int i=0; i<cookies.length; i++){
+                fixedExtensions.replace(cookies[i].getName(), true);
+            }
+        }
+        model.addAttribute("fixedExtensions", fixedExtensions);
         model.addAttribute("extensions", extensions);
         return "extension/list";
     }
-    @GetMapping("{name}&{result}")
-    public String extension(@PathVariable String name, @PathVariable boolean result, Model model){
+    @GetMapping("/fixed/{name}")
+    public String extension(@PathVariable String name, Model model, HttpServletRequest request, HttpServletResponse response){
         List<Extension> extensions = extensionRepository.findAll();
+        Cookie[] cookie = request.getCookies();
+        for(int i=0; i<cookie.length; i++){
+            if(cookie[i].getName().equals(name)){
+                cookie[i].setMaxAge(0);
+                cookie[i].setPath("/");
+                response.addCookie(cookie[i]);
+                return "redirect:/fileExtension";
+            }
+        }
+        Cookie fixCookie = new Cookie(name, name);
+        fixCookie.setPath("/");
+        response.addCookie(fixCookie);
         model.addAttribute("extensions", extensions);
-        //fixedExtensions에 하나만 들어가서 오류남
-        model.addAttribute("fixedExtensions", fixedExtensions().replace(name, result));
-        return "extension/list";
+        return "redirect:/fileExtension";
     }
 
     @PostMapping
     public String addExtension(@ModelAttribute Extension extension, BindingResult bindingResult, Model model){
         log.info("extension.getName={}", extension.getName());
-        //문자열 체크
-        String ptn = "^[a-zA-z]*$";
-        boolean result = Pattern.matches(ptn, extension.getName());
 
+        List<Extension> extensions = extensionRepository.findAll();
+        model.addAttribute("extensions", extensions);
+
+        //validation
         Map<String, String> errors = new HashMap<>();
 
+        //문자가 아닐경우
+        String ptn = "^[a-zA-z]*$";
+        boolean result = Pattern.matches(ptn, extension.getName());
         if(!result){
-           errors.put("name", "문자만 입력 해 주세요");
+           errors.put("name", "영문자만 입력 해 주세요");
+        }
+        //이미 추가된 확장자인 경우
+        for (Extension ex : extensions) {
+            if(ex.getName().equals(extension.getName())){
+                errors.put("name", "이미 등록된 확장자입니다");
+            }
+        }
+        //등록된 확장자가 200개 이상인 경우
+        if(extensions.size()>=200){
+            errors.put("name", "등록은 200개까지만 가능합니다");
         }
 
-        //에러가 있을경우
+        //에러발생
         if(!errors.isEmpty()){
             log.info("errors={}", errors);
-            List<Extension> extensions = extensionRepository.findAll();
+            model.addAttribute("fixedExtensions", fixedExtensions);
             model.addAttribute("errors", errors);
-            model.addAttribute("extensions", extensions);
             return "extension/list";
         }
+
         //정상수행일 경우
         Extension savedExtension = extensionRepository.save(extension);
-        return "redirect:/fileExtension";
-    }
-
-    @GetMapping("/fixed/{name}")
-    public String addFixedExtension(@PathVariable() String name, @ModelAttribute Extension extension, Model model){
-        extensionRepository.findAll();
-        if(fixedExtensions().get(name) == false){
-            model.addAttribute("extension", extension);
-            boolean result = true;
-            log.info("아래쪽result={}", result);
-            return "redirect:/fileExtension/"+name+"&"+result;
-        }else{
-            fixedExtensions().put(name, false);
-            model.addAttribute("extension", extension);
-            boolean result = fixedExtensions().get(name);
-            return "redirect:/fileExtension/"+name+"&"+result;
-        }
-
-    }
-    @PostMapping("/fixed/{name}")
-    public String addFixedExtensions(String name, @ModelAttribute Extension extension, Model model){
-
         return "redirect:/fileExtension";
     }
 
