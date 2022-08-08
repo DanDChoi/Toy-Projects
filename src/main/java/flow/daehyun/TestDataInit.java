@@ -13,6 +13,7 @@ public class TestDataInit {
 
     private final ExtensionRepository extensionRepository;
 
+    //Test 데이터
     @PostConstruct
     public void init(){
         extensionRepository.save(new Extension(1L, "txt"));
