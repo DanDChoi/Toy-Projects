@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -76,7 +75,7 @@ public class ExtensionController {
 
     //추가확장자 등록
     @PostMapping
-    public String addExtension(@ModelAttribute Extension extension, BindingResult bindingResult, Model model){
+    public String addExtension(@ModelAttribute Extension extension, Model model){
         log.info("extension.getName={}", extension.getName());
 
         List<Extension> extensions = extensionRepository.findAll();
