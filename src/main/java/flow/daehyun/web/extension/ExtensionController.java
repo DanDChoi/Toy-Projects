@@ -27,8 +27,15 @@ public class ExtensionController {
 
 
     @GetMapping
-    public String extension(Model model, HttpServletRequest request) {
+    public String extension(Model model, HttpServletRequest request, HttpServletResponse response) {
         List<Extension> extensions = extensionRepository.findAll();
+
+        if (request.getCookies() == null) {
+            Cookie test = new Cookie("test", "set");
+            test.setPath("/");
+            response.addCookie(test);
+        }
+
         Cookie[] cookies = request.getCookies();
 
         //쿠키에 등록된 고정확장자 체크박스 처리
