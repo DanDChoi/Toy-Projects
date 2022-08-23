@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>Flow by Daehyun</title>
+
+</head>
+<body>
+<div class="container mt-3" style="width: 50%">
+    <div class="py-5 text-center">
+        <h2>파일 확장자 차단</h2>
+    </div>
+
+    <form action="list.html" name="extension" th:action th:object="${extensions}" method="post">
+
+    <hr class="my-4">
+    <div>
+<!-- 고정 확장자 체크박스 -->
+        <div class="mb-3 align-content-center" style="display: flex">
+            <div><h5 style="margin-right: 10px">고정 확장자</h5></div>
+
+            <div class="form-check" th:each="fixedExtension : ${fixedExtensions}">
+                        <input type="checkbox" class="form-check-input" name="checkbox"
+                               th:value="${fixedExtension.key}" th:checked="${fixedExtension.value eq true}"
+                th:onchange="'location.href = \'' + @{/fileExtension/fixed/{name}(name=${fixedExtension.key})} + '\''">
+                <label th:text="${fixedExtension.key}" class="form-check-label" style="margin-right: 10px;">고정확장자</label>
+            </div>
+
+        </div>
+<!-- 고정 확장자 체크박스 끝 -->
+
+<!-- 커스텀 확장자 입력창 -->
+        <div class="mb-3 align-content-center" style="display: flex">
+            <div style="margin-right: 15px">
+                <h5>커스텀 확장자</h5>
+            </div>
+            <div class="d-inline-block">
+                <input type="text" id="name" name="name" maxlength="20" style="width: 300px;">
+                <button type="submit">추가</button>
+            </div>
+        </div>
+        <div class="field-error" th:if="${errors?.containsKey('name')}" th:text="${errors['name']}" style="color: red">에러 </div>
+        <hr class="my-4">
+<!-- 커스텀 확장자 입력창 끝 -->
+
+<!-- 차단된 확장자 리스트 -->
+        <div >
+            <p th:text="${size}+'/200'" style="color: gray; font-size: small">차단 확장자 개수</p>
+            <label th:each="extension : ${extensions}">
+                <div class="inputWarp" style="position: relative; display: inline-block;">
+                    <input type="text" th:value="${extension.name}"
+                           style="width: 60px; border-radius: 5px; margin-right: 5px; height: inherit; padding-right: 5px;" readonly>
+                    <button class="btnDelete" type="button"
+                    style="position: absolute; height: inherit; border: none; outline: none; cursor: pointer; top: 0; right: 5px; background: none; margin-top: 2px;"
+                    th:onclick="'location.href = \'' + @{/fileExtension/delete/{id}(id=${extension.id})} + '\''">X</button>
+                </div>
+            </label>
+        </div>
+<!-- 차단된 확장자 리스트 끝 -->
+    </div>
+    <hr class="my-4">
+
+
+<!-- 뒤로가기 버튼 -->
+    <div class="row">
+        <div class="col text-center">
+            <button class="w-25 btn btn-secondary btn-sm"
+                    onclick="location.href='/'"
+                    type="button" >뒤로가기</button>
+        </div>
+    </div>
+<!-- 뒤로가기 버튼 끝 -->
+
+    </form>
+</div> <!-- /container -->
+
+
+</body>
+</html>
