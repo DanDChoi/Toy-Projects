@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.request.RequestAttributes;
 import spring.validation.domain.exception.ValidCustomException;
 
 import java.util.Map;
